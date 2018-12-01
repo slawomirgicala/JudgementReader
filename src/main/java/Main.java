@@ -2,10 +2,14 @@ import javax.json.*;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Main {
 
     public static void main(String[] args){
+
+        Map<Integer,Judgment> judgments = new HashMap();
 
         InputStream fis = null;
         try {
@@ -14,16 +18,43 @@ public class Main {
             JsonObject jsonObject = jsonReader.readObject();
             JsonArray items = jsonObject.getJsonArray("items");
             for(int i = 0; i < items.size(); i++){
-                JsonObject court = items.getJsonObject(i);
-                court.getJsonString("decision");
-                court.getJsonObject("source");
-                System.out.println(obj.toString());
+                JsonObject item = items.getJsonObject(i);
+
+                Judgment judgment = new Judgment();
+
+                JsonValue value = item.getJsonNumber("id");
+                judgment.setSignature(((JsonNumber) value).intValue());
+
+                value = item.getJsonString("judgmentDate");
+                judgment.setDate(((JsonString) value).getString());
+
+                value = item.getJsonString("courtType");
+                judgment.setCourtType(((JsonString) value).getString());
+
+                JsonArray judges = item.getJsonArray("judges");
+                for (int j = 0; j < judges.size(); j++){
+                    JsonObject jsonJudge = judges.getJsonObject(j);
+                    Judge judge = new Judge();
+                    value = jsonJudge.getJsonString("name");
+                    judge.setName(((JsonString) value).getString());
+
+                    JsonArray roles = jsonJudge.getJsonArray("specialRoles");
+                    for (int k = 0; k < roles.size(); k++){
+                        value = roles.getJsonString(k);
+                        judge.addRole(((JsonString) value).getString());
+                    }
+                    judgment.addJudge(judge);
+                }
+
+                judgments.put(judgment.hashCode(),judgment);
             }
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
 
+        Judgment tester = judgments.get(13408);
+        System.out.println(tester.getSignature() +  " " + tester.getDate());
 
     }
 }
