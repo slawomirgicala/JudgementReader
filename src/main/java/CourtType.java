@@ -1,0 +1,8 @@
+public enum CourtType {
+    COMMON,
+    SUPREME,
+    ADMINISTRATIVE,
+    CONSTITUTIONAL_TRIBUNAL,
+    NATIONAL__APPEAL_CHAMBER;
+
+}
