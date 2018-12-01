@@ -36,14 +36,19 @@ public class Judgment {
     public void setCourtType(String courtType) {
         if (courtType.equals("COMMON")){
             this.courtType = CourtType.COMMON;
+            CourtType.COMMON.increaseCommon();
         }else if (courtType.equals("SUPREME")){
             this.courtType = CourtType.SUPREME;
+            CourtType.SUPREME.increaseSupreme();
         }else if (courtType.equals("ADMINISTRATIVE")){
             this.courtType = CourtType.ADMINISTRATIVE;
+            CourtType.ADMINISTRATIVE.increaseAdministrative();
         }else if (courtType.equals("CONSTITUTIONAL_TRIBUNAL")){
             this.courtType = CourtType.CONSTITUTIONAL_TRIBUNAL;
+            CourtType.CONSTITUTIONAL_TRIBUNAL.increaseConstitutional();
         }else if (courtType.equals("NATIONAL_APPEAL_CHAMBER")){
             this.courtType = CourtType.NATIONAL_APPEAL_CHAMBER;
+            CourtType.NATIONAL_APPEAL_CHAMBER.increaseNational();
         }
     }
 
