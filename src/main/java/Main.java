@@ -9,7 +9,7 @@ public class Main {
 
     public static void main(String[] args){
 
-        Map<Integer,Judgment> judgments = new HashMap();
+        /*Map<Integer,Judgment> judgments = new HashMap();
 
         InputStream fis = null;
         try {
@@ -34,7 +34,7 @@ public class Main {
                 JsonArray judges = item.getJsonArray("judges");
                 for (int j = 0; j < judges.size(); j++){
                     JsonObject jsonJudge = judges.getJsonObject(j);
-                    Judge judge = new Judge();
+                    JudgeWithRoles judge = new JudgeWithRoles();
                     value = jsonJudge.getJsonString("name");
                     judge.setName(((JsonString) value).getString());
 
@@ -55,6 +55,9 @@ public class Main {
 
         Judgment tester = judgments.get(13408);
         System.out.println(tester.getSignature() +  " " + tester.getDate());
-
+        */
+        JsonParser parser = new JsonParser(args[0]);
+        JudgmentQueries queries = new JudgmentQueries(parser.parse());
+        System.out.println(queries.getSentence("283463"));
     }
 }

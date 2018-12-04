@@ -5,7 +5,7 @@ public enum CourtType {
     CONSTITUTIONAL_TRIBUNAL,
     NATIONAL_APPEAL_CHAMBER;
 
-    private static int numberOfCommon;
+    /*private static int numberOfCommon;
     public void increaseCommon(){
         numberOfCommon++;
     }
@@ -28,5 +28,5 @@ public enum CourtType {
     private static int numberOfNational;
     public void increaseNational(){
         numberOfCommon++;
-    }
+    }*/
 }
