@@ -1,11 +1,14 @@
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 public class Judgment {
     private int signature;
+    private JudgmentType judgmentType;
     private String date;
     private CourtType courtType;
-    private String reason;
-    private ArrayList<JudgeWithRoles> judgeWithRoles = new ArrayList<>();
+    private String textContent;
+    private ArrayList<Judge> judges = new ArrayList<>();
+    private ArrayList<Regulation> referencedRegulations = new ArrayList<>();
 
 
     @Override
@@ -21,6 +24,28 @@ public class Judgment {
         this.signature = signature;
     }
 
+    public JudgmentType getJudgmentType() {
+        return judgmentType;
+    }
+
+    public void setJudgmentType(String judgmentType) {
+        switch (judgmentType){
+            case "DECISION":
+                this.judgmentType = JudgmentType.DECISION;
+                break;
+            case "RESOLUTION":
+                this.judgmentType = JudgmentType.RESOLUTION;
+                break;
+            case "SENTENCE":
+                this.judgmentType = JudgmentType.SENTENCE;
+            case "REGULATION":
+                this.judgmentType = JudgmentType.REGULATION;
+            case "REASONS":
+                this.judgmentType = JudgmentType.REASONS;
+                break;
+        }
+    }
+
     public String getDate() {
         return date;
     }
@@ -34,74 +59,84 @@ public class Judgment {
     }
 
     public void setCourtType(String courtType) {
-        if (courtType.equals("COMMON")){
-            this.courtType = CourtType.COMMON;
-            //CourtType.COMMON.increaseCommon();
-        }else if (courtType.equals("SUPREME")){
-            this.courtType = CourtType.SUPREME;
-            //CourtType.SUPREME.increaseSupreme();
-        }else if (courtType.equals("ADMINISTRATIVE")){
-            this.courtType = CourtType.ADMINISTRATIVE;
-            //CourtType.ADMINISTRATIVE.increaseAdministrative();
-        }else if (courtType.equals("CONSTITUTIONAL_TRIBUNAL")){
-            this.courtType = CourtType.CONSTITUTIONAL_TRIBUNAL;
-            //CourtType.CONSTITUTIONAL_TRIBUNAL.increaseConstitutional();
-        }else if (courtType.equals("NATIONAL_APPEAL_CHAMBER")){
-            this.courtType = CourtType.NATIONAL_APPEAL_CHAMBER;
-            //CourtType.NATIONAL_APPEAL_CHAMBER.increaseNational();
+        switch (courtType){
+            case "COMMON":
+                this.courtType = CourtType.COMMON;
+                break;
+            case "SUPREME":
+                this.courtType = CourtType.SUPREME;
+                break;
+            case "ADMINISTRATIVE":
+                this.courtType = CourtType.ADMINISTRATIVE;
+                break;
+            case "CONSTITUTIONAL_TRIBUNAL":
+                this.courtType = CourtType.CONSTITUTIONAL_TRIBUNAL;
+                break;
+            case "NATIONAL_APPEAL_CHAMBER":
+                this.courtType = CourtType.NATIONAL_APPEAL_CHAMBER;
+                break;
         }
     }
 
-    public String getReason() {
-        return reason;
+    public String getTextContent() {
+        return textContent;
     }
 
-    public void setReason(String reason) {
-        this.reason = reason;
+    public void setTextContent(String textContent) {
+        this.textContent = textContent;
     }
 
-    public ArrayList<JudgeWithRoles> getJudgeWithRoles() {
-        return judgeWithRoles;
+    public ArrayList<Judge> getJudges() {
+        return judges;
     }
 
-    public void addJudge(JudgeWithRoles judgeWithRoles) {
-        this.judgeWithRoles.add(judgeWithRoles);
+    public void addJudge(Judge judge) {
+        judges.add(judge);
     }
 
-    public Month getMonth(){
-        int numberOfMonth = Integer.parseInt(getDate().substring(5,6));
-        switch (numberOfMonth){
-            case 1:
-                return Month.JANUARY;
-            case 2:
-                return Month.FEBRUARY;
-            case 3:
-                return Month.MARCH;
-            case 4:
-                return Month.APRIL;
-            case 5:
-                return Month.MAY;
-            case 6:
-                return Month.JUNE;
-            case 7:
-                return Month.JULY;
-            case 8:
-                return Month.AUGUST;
-            case 9:
-                return Month.SEPTEMBER;
-            case 10:
-                return Month.OCTOBER;
-            case 11:
-                return Month.NOVEMBER;
-            case 12:
-                return Month.DECEMBER;
-        }
-        return Month.JANUARY;
+    public ArrayList<Regulation> getRegulations() {
+        return referencedRegulations;
+    }
+
+    public void addRegulation(Regulation regulation) {
+        this.referencedRegulations.add(regulation);
+    }
+
+
+    public Integer getMonth(){
+        return Integer.parseInt(getDate().substring(5,7));
     }
 
 
     @Override
     public String toString(){
-        return "dziala";
+
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("Sygnatura: ");
+        stringBuilder.append(getSignature());
+        stringBuilder.append("\n");
+        stringBuilder.append("Data: ");
+        stringBuilder.append(getDate());
+        stringBuilder.append("\n");
+        stringBuilder.append("Rodzaj sadu: ");
+        stringBuilder.append(getCourtType());
+        stringBuilder.append("\n");
+        stringBuilder.append("Sedziowie: ");
+
+        for (Judge judge : getJudges()){
+            stringBuilder.append(judge.getName());
+            stringBuilder.append("(");
+            stringBuilder.append(judge.getRole().stream().map(Object::toString)
+                    .collect(Collectors.joining(", ")));
+            /*for (JudgeRole role : judge.getRole()){
+                stringBuilder.append(role);
+                stringBuilder.append(",");
+            }*/
+
+            stringBuilder.append(")");
+            stringBuilder.append(", ");
+        }
+        stringBuilder.append("\n");
+        return stringBuilder.toString();
     }
 }

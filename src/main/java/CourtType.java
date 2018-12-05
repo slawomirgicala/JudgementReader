@@ -5,28 +5,20 @@ public enum CourtType {
     CONSTITUTIONAL_TRIBUNAL,
     NATIONAL_APPEAL_CHAMBER;
 
-    /*private static int numberOfCommon;
-    public void increaseCommon(){
-        numberOfCommon++;
+    @Override
+    public String toString(){
+        switch (this){
+            case COMMON:
+                return "Sad powszechny";
+            case SUPREME:
+                return "Sad Najwyzszy";
+            case ADMINISTRATIVE:
+                return "Sad administracyjny";
+            case CONSTITUTIONAL_TRIBUNAL:
+                return "Trybunal Konstytucyjny";
+            case NATIONAL_APPEAL_CHAMBER:
+                return "Krajowa Izba Odwolawcza";
+        }
+        return "";
     }
-
-    private static int numberOfSupreme;
-    public void increaseSupreme(){
-        numberOfSupreme++;
-    }
-
-    private static int numberOfAdministrative;
-    public void increaseAdministrative(){
-        numberOfAdministrative++;
-    }
-
-    private static int numberOfConstitutional;
-    public void increaseConstitutional(){
-        numberOfConstitutional++;
-    }
-
-    private static int numberOfNational;
-    public void increaseNational(){
-        numberOfCommon++;
-    }*/
 }

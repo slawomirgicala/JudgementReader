@@ -7,7 +7,6 @@ import java.util.Map;
 
 public class JsonParser implements IParser{
 
-    //Map<Integer,Judgment> judgments = new HashMap();
     private String path;
 
     public JsonParser(String path){
@@ -32,25 +31,46 @@ public class JsonParser implements IParser{
                 JsonValue value = item.getJsonNumber("id");
                 judgment.setSignature(((JsonNumber) value).intValue());
 
+                value = item.getJsonString("judgmentType");
+                judgment.setJudgmentType(((JsonString) value).getString());
+
                 value = item.getJsonString("judgmentDate");
                 judgment.setDate(((JsonString) value).getString());
 
                 value = item.getJsonString("courtType");
                 judgment.setCourtType(((JsonString) value).getString());
 
+                value = item.getJsonString("textContent");
+                judgment.setTextContent(((JsonString) value).getString());
+
                 JsonArray judges = item.getJsonArray("judges");
                 for (int j = 0; j < judges.size(); j++){
                     JsonObject jsonJudge = judges.getJsonObject(j);
-                    JudgeWithRoles judgeWithRoles = new JudgeWithRoles();
+                    Judge judge = new Judge();
                     value = jsonJudge.getJsonString("name");
-                    judgeWithRoles.setName(((JsonString) value).getString());
+                    judge.setName(((JsonString) value).getString());
 
                     JsonArray roles = jsonJudge.getJsonArray("specialRoles");
                     for (int k = 0; k < roles.size(); k++){
                         value = roles.getJsonString(k);
-                        judgeWithRoles.addRole(((JsonString) value).getString());
+                        judge.addRole(((JsonString) value).getString());
                     }
-                    judgment.addJudge(judgeWithRoles);
+                    judgment.addJudge(judge);
+                }
+
+                JsonArray referencedRegulations = item.getJsonArray("referencedRegulations");
+                for (int j = 0; j < referencedRegulations.size(); j++){
+                    JsonObject jsonRegulation = referencedRegulations.getJsonObject(j);
+                    Regulation regulation = new Regulation();
+                    value = jsonRegulation.getJsonString("journalTitle");
+                    regulation.setJournalTitle(((JsonString) value).getString());
+                    value = jsonRegulation.getJsonNumber("journalNo");
+                    regulation.setJournalNo(((JsonNumber) value).intValue());
+                    value = jsonRegulation.getJsonNumber("journalYear");
+                    regulation.setJournalYear(((JsonNumber) value).intValue());
+                    value = jsonRegulation.getJsonNumber("journalEntry");
+                    regulation.setJournalEntry(((JsonNumber) value).intValue());
+                    judgment.addRegulation(regulation);
                 }
 
                 judgments.put(judgment.hashCode(),judgment);

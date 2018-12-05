@@ -8,13 +8,13 @@ public interface IJudgmentQueries {
 
     int getNumberOfSentences(String judge);
 
-    String getTop10(String top);
+    String getTop10();
 
-    String sentencesByMonth(String monthly);
+    String sentencesByMonth();
 
     String sentencesByCourt();
 
-    String popularRegulations(String regulations);
+    String popularRegulations();
 
     String numberOfJudges();
 

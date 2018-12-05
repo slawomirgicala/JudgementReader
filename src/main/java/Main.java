@@ -34,7 +34,7 @@ public class Main {
                 JsonArray judges = item.getJsonArray("judges");
                 for (int j = 0; j < judges.size(); j++){
                     JsonObject jsonJudge = judges.getJsonObject(j);
-                    JudgeWithRoles judge = new JudgeWithRoles();
+                    Judge judge = new Judge();
                     value = jsonJudge.getJsonString("name");
                     judge.setName(((JsonString) value).getString());
 
@@ -58,6 +58,12 @@ public class Main {
         */
         JsonParser parser = new JsonParser(args[0]);
         JudgmentQueries queries = new JudgmentQueries(parser.parse());
-        System.out.println(queries.getSentence("283463"));
+        //String[] tester = {"94832","34544"};
+        System.out.println(queries.getTop10());
+        System.out.println(queries.getNumberOfSentences("Zbigniew Myszka"));
+        System.out.println(queries.popularRegulations());
+        /*Judgment dateTest = new Judgment();
+        dateTest.setDate("2011-05-04");
+        System.out.println(dateTest.getMonth());*/
     }
 }
