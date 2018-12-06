@@ -1,10 +1,10 @@
 public class InteractiveApp {
 
     private boolean shouldRun = true;
-    private JudgmentQueries queryEngine;
+    private JudgmentQueries queries;
 
     public InteractiveApp(JudgmentQueries judgmentQueries){
-        this.queryEngine = judgmentQueries;
+        this.queries = judgmentQueries;
     }
 
     public void run(){

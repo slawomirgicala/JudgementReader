@@ -11,6 +11,14 @@ public class Regulation {
         return Objects.hash(journalTitle,journalNo, journalYear, journalEntry);
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Regulation)) return false;
+        Regulation that = (Regulation) o;
+        return journalNo == that.journalNo && journalYear == that.journalYear && journalEntry == that.journalEntry;
+    }
+
     public String getJournalTitle() {
         return journalTitle;
     }

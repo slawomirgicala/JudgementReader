@@ -3,5 +3,5 @@ public enum JudgmentType {
     RESOLUTION,
     SENTENCE,
     REGULATION,
-    REASONS;
+    REASONS
 }

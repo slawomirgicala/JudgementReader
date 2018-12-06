@@ -128,11 +128,6 @@ public class Judgment {
             stringBuilder.append("(");
             stringBuilder.append(judge.getRole().stream().map(Object::toString)
                     .collect(Collectors.joining(", ")));
-            /*for (JudgeRole role : judge.getRole()){
-                stringBuilder.append(role);
-                stringBuilder.append(",");
-            }*/
-
             stringBuilder.append(")");
             stringBuilder.append(", ");
         }
