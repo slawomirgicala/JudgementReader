@@ -75,6 +75,12 @@ public class Judgment {
             case "NATIONAL_APPEAL_CHAMBER":
                 this.courtType = CourtType.NATIONAL_APPEAL_CHAMBER;
                 break;
+            case "Wojewódzki Sąd Administracyjny":
+                this.courtType = CourtType.WOJEWODZKI_SAD_ADMINISTRACYJNY;
+                break;
+            case "Naczelny Sąd Administracyjny":
+                this.courtType = CourtType.NACZELNY_SAD_ADMINISTRACYJNY;
+                break;
         }
     }
 
