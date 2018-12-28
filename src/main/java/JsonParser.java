@@ -14,8 +14,8 @@ public class JsonParser implements IParser{
     }
 
     @Override
-    public Map parse() {
-        Map<Integer,Judgment> judgments = new HashMap<>();
+    public void parse(Map judgments) {
+        //Map<Integer,Judgment> judgments = new HashMap<>();
 
         InputStream fis = null;
         try {
@@ -79,6 +79,6 @@ public class JsonParser implements IParser{
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        return judgments;
+        //return judgments;
     }
 }

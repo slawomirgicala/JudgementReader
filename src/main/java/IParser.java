@@ -2,6 +2,6 @@ import java.util.Map;
 
 public interface IParser {
 
-    Map parse();
+    void parse(Map map);
 
 }

@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.stream.Collectors;
 
 public class Judgment {
-    private int signature;
+    private  String signature;
     private JudgmentType judgmentType;
     private String date;
     private CourtType courtType;
