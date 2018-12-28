@@ -2,6 +2,7 @@ import javax.json.*;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -26,26 +27,42 @@ public class JsonParser implements IParser{
             for(int i = 0; i < items.size(); i++){
                 JsonObject item = items.getJsonObject(i);
 
-                Judgment judgment = new Judgment();
+                JsonArray courtCases = item.getJsonArray("courtCases");
+                JsonObject firstCaseNumber = courtCases.getJsonObject(0);
+                JsonString caseNumber = firstCaseNumber.getJsonString("caseNumber");
+                String signature = caseNumber.getString();
 
-                JsonValue value = item.getJsonNumber("id");
-                judgment.setSignature(((JsonNumber) value).intValue());
-
-                value = item.getJsonString("judgmentType");
-                judgment.setJudgmentType(((JsonString) value).getString());
-
-                value = item.getJsonString("judgmentDate");
-                judgment.setDate(((JsonString) value).getString());
+                JsonValue value = item.getJsonString("judgmentDate");
+                String date = ((JsonString) value).getString();
 
                 value = item.getJsonString("courtType");
-                judgment.setCourtType(((JsonString) value).getString());
+                String courtTypeStr = ((JsonString) value).getString();
+                CourtType courtType = null;
+                switch (courtTypeStr) {
+                    case "COMMON":
+                        courtType = CourtType.COMMON;
+                        break;
+                    case "SUPREME":
+                        courtType = CourtType.SUPREME;
+                        break;
+                    case "ADMINISTRATIVE":
+                        courtType = CourtType.ADMINISTRATIVE;
+                        break;
+                    case "CONSTITUTIONAL_TRIBUNAL":
+                        courtType = CourtType.CONSTITUTIONAL_TRIBUNAL;
+                        break;
+                    case "NATIONAL_APPEAL_CHAMBER":
+                        courtType = CourtType.NATIONAL_APPEAL_CHAMBER;
+                        break;
+                }
 
                 value = item.getJsonString("textContent");
-                judgment.setTextContent(((JsonString) value).getString());
+                String textContent = ((JsonString) value).getString();
 
-                JsonArray judges = item.getJsonArray("judges");
+                ArrayList<Judge> judges = new ArrayList<>();
+                JsonArray jsonJudges = item.getJsonArray("judges");
                 for (int j = 0; j < judges.size(); j++){
-                    JsonObject jsonJudge = judges.getJsonObject(j);
+                    JsonObject jsonJudge = jsonJudges.getJsonObject(j);
                     Judge judge = new Judge();
                     value = jsonJudge.getJsonString("name");
                     judge.setName(((JsonString) value).getString());
@@ -55,30 +72,24 @@ public class JsonParser implements IParser{
                         value = roles.getJsonString(k);
                         judge.addRole(((JsonString) value).getString());
                     }
-                    judgment.addJudge(judge);
+                    judges.add(judge);
                 }
 
-                JsonArray referencedRegulations = item.getJsonArray("referencedRegulations");
+                ArrayList<Regulation> referencedRegulations = new ArrayList<>();
+                JsonArray jsonRefRegs = item.getJsonArray("referencedRegulations");
                 for (int j = 0; j < referencedRegulations.size(); j++){
-                    JsonObject jsonRegulation = referencedRegulations.getJsonObject(j);
+                    JsonObject jsonRegulation = jsonRefRegs.getJsonObject(j);
                     Regulation regulation = new Regulation();
                     value = jsonRegulation.getJsonString("journalTitle");
                     regulation.setJournalTitle(((JsonString) value).getString());
-                    value = jsonRegulation.getJsonNumber("journalNo");
-                    regulation.setJournalNo(((JsonNumber) value).intValue());
-                    value = jsonRegulation.getJsonNumber("journalYear");
-                    regulation.setJournalYear(((JsonNumber) value).intValue());
-                    value = jsonRegulation.getJsonNumber("journalEntry");
-                    regulation.setJournalEntry(((JsonNumber) value).intValue());
-                    judgment.addRegulation(regulation);
+                    referencedRegulations.add(regulation);
                 }
-
+                Judgment judgment = new Judgment(signature,date,courtType,textContent,judges,referencedRegulations);
                 judgments.put(judgment.hashCode(),judgment);
             }
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        //return judgments;
     }
 }

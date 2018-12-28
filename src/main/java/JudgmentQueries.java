@@ -19,10 +19,7 @@ public class JudgmentQueries implements IJudgmentQueries{
 
     @Override
     public String getReason(String signature) {
-        Judgment judgment = judgmentMap.get(Integer.parseInt(signature));
-        if (judgment.getJudgmentType().equals(JudgmentType.REASONS)){
-            return judgment.getTextContent();
-        }else return "";
+        return judgmentMap.get(Integer.parseInt(signature)).getTextContent();
     }
 
     @Override

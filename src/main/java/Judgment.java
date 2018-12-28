@@ -1,113 +1,52 @@
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class Judgment {
-    private  String signature;
-    private JudgmentType judgmentType;
-    private String date;
-    private CourtType courtType;
-    private String textContent;
-    private ArrayList<Judge> judges = new ArrayList<>();
-    private ArrayList<Regulation> referencedRegulations = new ArrayList<>();
+    private final String signature;
+    private final String date;
+    private final CourtType courtType;
+    private final String textContent;
+    private final ArrayList<Judge> judges;
+    private final ArrayList<Regulation> referencedRegulations;
 
+    public Judgment(String signature,String date, CourtType courtType, String textContent, ArrayList<Judge> judges, ArrayList<Regulation> referencedRegulations){
+        this.signature = signature;
+        this.date = date;
+        this.courtType = courtType;
+        this.textContent = textContent;
+        this.judges = judges;
+        this.referencedRegulations = referencedRegulations;
+    }
 
     @Override
     public int hashCode(){
+        return Objects.hash(signature);
+    }
+
+    public String getSignature() {
         return signature;
-    }
-
-    public int getSignature() {
-        return signature;
-    }
-
-    public void setSignature(int signature) {
-        this.signature = signature;
-    }
-
-    public JudgmentType getJudgmentType() {
-        return judgmentType;
-    }
-
-    public void setJudgmentType(String judgmentType) {
-        switch (judgmentType){
-            case "DECISION":
-                this.judgmentType = JudgmentType.DECISION;
-                break;
-            case "RESOLUTION":
-                this.judgmentType = JudgmentType.RESOLUTION;
-                break;
-            case "SENTENCE":
-                this.judgmentType = JudgmentType.SENTENCE;
-            case "REGULATION":
-                this.judgmentType = JudgmentType.REGULATION;
-            case "REASONS":
-                this.judgmentType = JudgmentType.REASONS;
-                break;
-        }
     }
 
     public String getDate() {
         return date;
     }
 
-    public void setDate(String date) {
-        this.date = date;
-    }
-
     public CourtType getCourtType() {
         return courtType;
-    }
-
-    public void setCourtType(String courtType) {
-        switch (courtType){
-            case "COMMON":
-                this.courtType = CourtType.COMMON;
-                break;
-            case "SUPREME":
-                this.courtType = CourtType.SUPREME;
-                break;
-            case "ADMINISTRATIVE":
-                this.courtType = CourtType.ADMINISTRATIVE;
-                break;
-            case "CONSTITUTIONAL_TRIBUNAL":
-                this.courtType = CourtType.CONSTITUTIONAL_TRIBUNAL;
-                break;
-            case "NATIONAL_APPEAL_CHAMBER":
-                this.courtType = CourtType.NATIONAL_APPEAL_CHAMBER;
-                break;
-            case "Wojewódzki Sąd Administracyjny":
-                this.courtType = CourtType.WOJEWODZKI_SAD_ADMINISTRACYJNY;
-                break;
-            case "Naczelny Sąd Administracyjny":
-                this.courtType = CourtType.NACZELNY_SAD_ADMINISTRACYJNY;
-                break;
-        }
     }
 
     public String getTextContent() {
         return textContent;
     }
 
-    public void setTextContent(String textContent) {
-        this.textContent = textContent;
-    }
-
     public ArrayList<Judge> getJudges() {
         return judges;
-    }
-
-    public void addJudge(Judge judge) {
-        judges.add(judge);
     }
 
     public ArrayList<Regulation> getRegulations() {
         return referencedRegulations;
     }
-
-    public void addRegulation(Regulation regulation) {
-        this.referencedRegulations.add(regulation);
-    }
-
 
     public Integer getMonth(){
         return Integer.parseInt(getDate().substring(5,7));

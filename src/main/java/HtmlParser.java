@@ -23,7 +23,6 @@ public class HtmlParser implements IParser {
     @Override
     public void parse(Map judgments) {
 
-        Judgment judgment = new Judgment(); ////  ZROBIC FINAL I DODAC W KONSTRUKTORZE
         File input = new File(this.path);
         try{
 
@@ -79,7 +78,8 @@ public class HtmlParser implements IParser {
                 referencedRegulations.add(regulation);
             }
 
-
+            Judgment judgment = new Judgment(signature,date,courtType,textContent,judges,referencedRegulations);
+            judgments.put(judgment.hashCode(),judgment);
 
         }catch (IOException ex){
             System.out.println(ex.toString());
