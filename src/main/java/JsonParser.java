@@ -16,7 +16,6 @@ public class JsonParser implements IParser{
 
     @Override
     public void parse(Map judgments) {
-        //Map<Integer,Judgment> judgments = new HashMap<>();
 
         InputStream fis = null;
         try {
