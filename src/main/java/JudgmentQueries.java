@@ -19,7 +19,7 @@ public class JudgmentQueries implements IJudgmentQueries{
 
     @Override
     public String getReason(String signature) {
-        return judgmentMap.get(Integer.parseInt(signature)).getTextContent();
+        return judgmentMap.get(Objects.hash(signature)).getTextContent();
     }
 
     @Override

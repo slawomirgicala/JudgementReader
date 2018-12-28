@@ -67,15 +67,17 @@ public class HtmlParser implements IParser {
                 }
             }
 
-            Elements regElements = doc.getElementsByClass("nakt");
-            String tmpReg = regElements.toString().substring(20);
-            tmpReg = tmpReg.substring(0,tmpReg.length() - 7);
-            String[] refRegs = tmpReg.split("<br>");
             ArrayList<Regulation> referencedRegulations = new ArrayList<>();
-            for (String reg : refRegs){
-                Regulation regulation = new Regulation();
-                regulation.setJournalTitle(reg);
-                referencedRegulations.add(regulation);
+            Elements regElements = doc.getElementsByClass("nakt");
+            if (!regElements.text().equals("")){
+                String tmpReg = regElements.text().substring(20);
+                tmpReg = tmpReg.substring(0,tmpReg.length() - 7);
+                String[] refRegs = tmpReg.split("<br>");
+                for (String reg : refRegs){
+                    Regulation regulation = new Regulation();
+                    regulation.setJournalTitle(reg);
+                    referencedRegulations.add(regulation);
+                }
             }
 
             Judgment judgment = new Judgment(signature,date,courtType,textContent,judges,referencedRegulations);
