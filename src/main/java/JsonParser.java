@@ -60,7 +60,7 @@ public class JsonParser implements IParser{
 
                 ArrayList<Judge> judges = new ArrayList<>();
                 JsonArray jsonJudges = item.getJsonArray("judges");
-                for (int j = 0; j < judges.size(); j++){
+                for (int j = 0; j < jsonJudges.size(); j++){
                     JsonObject jsonJudge = jsonJudges.getJsonObject(j);
                     Judge judge = new Judge();
                     value = jsonJudge.getJsonString("name");
@@ -76,7 +76,7 @@ public class JsonParser implements IParser{
 
                 ArrayList<Regulation> referencedRegulations = new ArrayList<>();
                 JsonArray jsonRefRegs = item.getJsonArray("referencedRegulations");
-                for (int j = 0; j < referencedRegulations.size(); j++){
+                for (int j = 0; j < jsonRefRegs.size(); j++){
                     JsonObject jsonRegulation = jsonRefRegs.getJsonObject(j);
                     Regulation regulation = new Regulation();
                     value = jsonRegulation.getJsonString("journalTitle");

@@ -14,12 +14,21 @@ public class JudgmentQueries implements IJudgmentQueries{
 
     @Override
     public String getSentence(String signature){
-        return judgmentMap.get(Integer.parseInt(signature)).toString();
+        //Integer sig = Integer.parseInt(signature);// do debbugowania
+        Judgment judgment = judgmentMap.get(Integer.parseInt(signature));
+        if (judgment == null){
+            return "No corresponding sentence for signature: " + signature;
+        }
+        return judgment.toString();
     }
 
     @Override
     public String getReason(String signature) {
-        return judgmentMap.get(Objects.hash(signature)).getTextContent();
+        Judgment judgment = judgmentMap.get(Objects.hash(signature));
+        if (judgment == null){
+            return "No corresponding sentence for signature: " + signature;
+        }
+        return judgment.getTextContent();
     }
 
     @Override
