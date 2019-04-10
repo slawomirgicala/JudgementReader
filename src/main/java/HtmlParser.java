@@ -3,6 +3,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Map;
 
+import org.apache.commons.io.FilenameUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.parser.*;
 import org.jsoup.helper.*;
@@ -13,17 +14,36 @@ import org.jsoup.select.*;
 
 public class HtmlParser implements IParser {
 
-    private String path;
+    /*private String path;
 
     public HtmlParser(String path){
         this.path = path;
+    }*/
+
+
+    @Override
+    public void parseDir(Map map, String dirPath){
+        File dir = new File(dirPath);
+        File[] dirList = dir.listFiles();
+        if (dirList != null){
+            for (File child : dirList){
+                if (child.isDirectory() ){
+                    parseDir(map,child.getPath());
+                }else if (FilenameUtils.getExtension(child.getName()).equals("html")){
+                    parseOne(map, child.getAbsolutePath());
+                }
+            }
+        }else {
+            System.out.println("This is not directory or directory is empty\n");
+        }
+
     }
 
 
     @Override
-    public void parse(Map judgments) {
+    public void parseOne(Map judgments,String filePath) {
 
-        File input = new File(this.path);
+        File input = new File(filePath);
         try{
 
             Document doc = Jsoup.parse(input, "UTF-8");

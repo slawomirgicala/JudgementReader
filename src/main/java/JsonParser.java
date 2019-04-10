@@ -1,4 +1,7 @@
+import org.apache.commons.io.FilenameUtils;
+
 import javax.json.*;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
@@ -8,18 +11,39 @@ import java.util.Map;
 
 public class JsonParser implements IParser{
 
-    private String path;
+    /*private Map map;
+    private String dirPath;
 
-    public JsonParser(String path){
-        this.path = path;
-    }
+    public JsonParser(Map map, String dirPath){
+        this.map = map;
+        this.dirPath = dirPath;
+    }*/
 
     @Override
-    public void parse(Map judgments) {
+    public void parseDir(Map map, String dirPath){
+        File dir = new File(dirPath);
+        File[] dirList = dir.listFiles();
+        if (dirList != null){
+            for (File child : dirList){
+                if (child.isDirectory() ){
+                    parseDir(map,child.getPath());
+                }else if (FilenameUtils.getExtension(child.getName()).equals("json")){
+                    parseOne(map, child.getAbsolutePath());
+                }
+            }
+        }else {
+            System.out.println("This is not directory or directory is empty\n");
+        }
+
+    }
+
+
+    @Override
+    public void parseOne(Map judgments, String filePath) {
 
         InputStream fis = null;
         try {
-            fis = new FileInputStream(this.path);
+            fis = new FileInputStream(filePath);
             JsonReader jsonReader = Json.createReader(fis);
             JsonObject jsonObject = jsonReader.readObject();
             JsonArray items = jsonObject.getJsonArray("items");

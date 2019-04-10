@@ -30,7 +30,9 @@ public class InteractiveApp {
                     if (arguments == null){
                         System.out.println("podaj argumenty");
                     }else{
-                        System.out.println(queries.getSentences(arguments));
+                        String joinSignatures = String.join(" ",arguments);
+                        String[] signatures = joinSignatures.split(",");
+                        System.out.println(queries.getSentences(signatures));
                     }
                     break;
                 case "content":
