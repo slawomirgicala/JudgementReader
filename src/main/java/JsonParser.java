@@ -6,18 +6,9 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
 
 public class JsonParser implements IParser{
-
-    /*private Map map;
-    private String dirPath;
-
-    public JsonParser(Map map, String dirPath){
-        this.map = map;
-        this.dirPath = dirPath;
-    }*/
 
     @Override
     public void parseDir(Map map, String dirPath){

@@ -14,7 +14,6 @@ public class JudgmentQueries implements IJudgmentQueries{
 
     @Override
     public String getSentence(String signature){
-        //Integer sig = Integer.parseInt(signature);// do debbugowania
         Judgment judgment = judgmentMap.get(Objects.hash(signature));
         if (judgment == null){
             return "No corresponding sentence for signature: " + signature;

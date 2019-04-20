@@ -5,21 +5,10 @@ import java.util.Map;
 
 import org.apache.commons.io.FilenameUtils;
 import org.jsoup.Jsoup;
-import org.jsoup.parser.*;
-import org.jsoup.helper.*;
-import org.jsoup.internal.*;
 import org.jsoup.nodes.*;
-import org.jsoup.safety.*;
 import org.jsoup.select.*;
 
 public class HtmlParser implements IParser {
-
-    /*private String path;
-
-    public HtmlParser(String path){
-        this.path = path;
-    }*/
-
 
     @Override
     public void parseDir(Map map, String dirPath){
